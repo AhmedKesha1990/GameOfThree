@@ -1,4 +1,4 @@
-#How to run it
+# How to run it
 - Make Sure you are runngin docker
 - run make start-dev command
 - make start-dev command will run the backend, fronend and nginx
