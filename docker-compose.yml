@@ -1,0 +1,70 @@
+version: '3.7'
+
+services:
+
+  backend:
+    container_name: backend
+    build: ./backend
+    ports:
+      - 8000:8000
+    environment:
+      - SALT=10  
+      - JWT_SECRET=xxxxx
+    env_file:
+      - ./db.env
+    depends_on:
+      - mysql
+    volumes:
+      - ./backend:/usr/src/app
+    networks:
+      - takeaway
+
+  mysql:
+    build: .docker/mysql
+    ports:
+      - 3306:3306
+    environment:
+      - MYSQL_DATABASE=takeaway
+      - MYSQL_USER=takeaway
+      - MYSQL_PASSWORD=takeaway
+      - MYSQL_ROOT_PASSWORD=takeaway
+    volumes:
+      - mysql-data:/var/lib/mysql
+    networks:
+      - takeaway
+
+  nginx:
+    build:
+      context: .
+      dockerfile: .docker/nginx/Dockerfile
+    volumes:
+      - ./frontend:/srv/app/public
+    ports:
+      - 0.0.0.0:8080:80
+    env_file:
+    - ./nginx.env
+    depends_on:
+    - backend
+    - frontend
+    networks:
+    - takeaway
+
+  frontend:
+    container_name: frontend
+    build: ./frontend
+    volumes:
+      - ./frontend:/usr/src/app
+      - /usr/src/app/node_modules
+    ports:
+      - 3000:3000
+    stdin_open: true
+    environment:
+      - CHOKIDAR_USEPOLLING=true
+    networks:
+      - takeaway
+
+networks:
+  takeaway:
+
+volumes:
+  mysql-data:

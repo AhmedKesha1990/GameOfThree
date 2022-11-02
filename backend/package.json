@@ -1,0 +1,37 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc --project tsconfig.build.json",
+    "start:dev": "npm run build && concurrently 'tsc -w' 'node-dev -r tsconfig-paths/register -r ts-node/register --respawn dist/index.js'"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.13.2",
+    "express": "^4.18.2",
+    "mysql": "^2.18.1",
+    "reflect-metadata": "^0.1.13",
+    "routing-controllers": "^0.9.0",
+    "socket-controllers": "0.0.5",
+    "socket.io": "^4.5.3",
+    "typedi": "^0.10.0",
+    "typeorm": "^0.3.10",
+    "typeorm-routing-controllers-extensions": "^0.2.0",
+    "typeorm-typedi-extensions": "^0.4.1"
+  },
+  "devDependencies": {
+    "@types/express": "^4.17.14",
+    "@types/node": "^18.11.5",
+    "concurrently": "^7.5.0",
+    "node-dev": "^7.4.3",
+    "typescript": "^4.8.4",
+    "ts-node": "^10.9.1",
+    "tsconfig-paths": "^4.1.0"
+  },
+  "description": ""
+}
